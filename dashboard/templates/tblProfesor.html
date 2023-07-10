@@ -1,0 +1,111 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Profesores</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Listado</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div class="input-group mb-3">
+          <input type="text" id="searchInput" class="form-control" placeholder="Buscar profesor">
+        </div>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+              <th>Celular</th>
+              <th>Cuenta</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- LISTADO DE profesores -->
+            {% for profesor in profesores %}
+            <tr>
+              <td>{{ profesor.id }}</td>
+              <td>{{ profesor.nombre }}</td>
+              <td>{{ profesor.apellido }}</td>
+              <td>{{ profesor.email }}</td>
+              <td>{{ profesor.celular }}</td>
+              <td>{{ profesor.cuenta }}</td>
+              <td>
+                <form id="deleteForm{{ profesor.id }}" action="{% url 'eliminar_profesor' profesor.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="button" class="btn btn-danger" onclick="confirmDelete('{{ profesor.nombre }}', '{{ profesor.id }}')">Eliminar</button>
+                  <a href="{% url 'modificar_profesor' profesor.id %}" class="btn btn-primary">Modificar</a>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="display: inline-block; margin-right: 10px;">
+          <a href="{% url 'nuevo_profesor' %}" class="btn btn-primary">Nuevo profesor</a>
+          <a href="/" class="btn btn-primary">Ir a la página principal</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación de eliminación -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Deseas eliminar al profesor <span id="profesorNombre"></span>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" onclick="deleteProfesor()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  var selectedProfesorId = '';
+
+  function confirmDelete(nombre, id) {
+    selectedProfesorId = id;
+    $('#profesorNombre').text(nombre);
+    $('#confirmModal').modal('show');
+  }
+
+  function deleteProfesor() {
+    if (selectedProfesorId) {
+      // Enviar el formulario de eliminación
+      $('#deleteForm' + selectedProfesorId).submit();
+    }
+  }
+
+  $(document).ready(function() {
+    $('#searchInput').on('keyup', function() {
+      var value = $(this).val().toLowerCase();
+      $('#dataTable tbody tr').filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+{% endblock %}

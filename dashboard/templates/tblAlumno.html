@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Alumnos</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Listado</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div class="input-group mb-3">
+          <input type="text" id="searchInput" class="form-control" placeholder="Buscar alumno">
+        </div>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+              <th>Celular</th>
+              <th>Ciclo</th>
+              <th>Cuenta</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- LISTADO DE alumnos -->
+            {% for alumno in alumnos %}
+            <tr>
+              <td>{{ alumno.id }}</td>
+              <td>{{ alumno.nombre }}</td>
+              <td>{{ alumno.apellido }}</td>
+              <td>{{ alumno.email }}</td>
+              <td>{{ alumno.celular }}</td>
+              <td>{{ alumno.ciclo }}</td>
+              <td>{{ alumno.cuenta }}</td>
+              <td>
+                <div class="btn-group mt-2" role="group" aria-label="Acciones">
+                  <form id="deleteForm{{ alumno.id }}" action="{% url 'eliminar_alumno' alumno.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-danger" style="margin: 1px;" data-toggle="modal" data-target="#confirmModal{{ alumno.id }}">Eliminar</button>
+                  </form>
+                  <a href="{% url 'modificar_alumno' alumno.id %}" class="btn btn-primary" style="margin: 1px;">Modificar</a>
+                </div>
+              </td>
+            </tr>
+            
+            <!-- Modal de confirmación de eliminación -->
+            <div class="modal fade" id="confirmModal{{ alumno.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>¿Deseas eliminar al alumno <strong>{{ alumno.nombre }}</strong>?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="document.getElementById('deleteForm{{ alumno.id }}').submit()">Eliminar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mb-3">
+    <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#nuevoUsuario">Nuevo alumno</button>
+    <a href="/" class="btn btn-primary">Ir a la página principal</a>
+  </div>
+  
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#searchInput').on('keyup', function() {
+      var value = $(this).val().toLowerCase();
+      $('#dataTable tbody tr').filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+{% endblock %}

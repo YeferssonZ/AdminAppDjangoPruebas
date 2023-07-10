@@ -1,0 +1,8 @@
+{% for curso in cursos %}
+    <h3>{{ curso.nombre }}</h3>
+    <ul>
+        {% for alumno in curso.alumnos.all %}
+            <li>{{ alumno.nombre }} {{ alumno.apellido }}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}

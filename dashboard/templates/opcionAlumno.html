@@ -1,0 +1,122 @@
+{% extends 'layout.html' %} {% load static %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta
+      name="author"
+      content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
+    />
+    <meta name="generator" content="Hugo 0.88.1" />
+    <title>Carousel Template · Bootstrap v5.1</title>
+
+    <link
+      rel="canonical"
+      href="https://getbootstrap.com/docs/5.1/examples/carousel/"
+    />
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .btn-lg:hover {
+        font-size: 1.8rem; /* Tamaño de fuente más grande al hacer hover */
+      }
+      .btn-lg {
+        font-size: 1.5rem; /* Tamaño de fuente inicial */
+        margin: 0 auto; /* Centrar el botón horizontalmente */
+        display: block; /* Asegurar que el botón ocupe todo el ancho disponible */
+        width: fit-content; /* Ajustar el ancho del botón al contenido */
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="carousel.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <!-- Marketing messaging and featurettes
+  ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+
+      <div class="container marketing">
+        <hr class="featurette-divider" />
+
+        <div class="row featurette">
+          <div class="col-md-7 d-flex align-items-center mx-auto">
+            <button
+              class="btn btn-primary btn-lg"
+              onclick="window.location.href='/listaProfesor/'"
+            >
+              REGISTROS DE PROFESORES
+            </button>
+          </div>
+          <div class="col-md-5">
+            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+            <lottie-player
+              src="https://assets1.lottiefiles.com/private_files/lf30_g4ft9Z.json"
+              background="transparent"
+              speed="1"
+              style="width: 500px; height: 500px"
+              loop
+              autoplay
+            ></lottie-player>
+          </div>
+        </div>
+
+        <hr class="featurette-divider" />
+
+        <div class="row featurette">
+          <div class="col-md-5">
+            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+            <lottie-player
+              src="https://assets10.lottiefiles.com/packages/lf20_htPoNUjVws.json"
+              background="transparent"
+              speed="1"
+              style="width: 500px; height: 500px"
+              loop
+              autoplay
+            ></lottie-player>
+          </div>
+          <div class="col-md-7 d-flex align-items-center mx-auto">
+            <button
+              class="btn btn-primary btn-lg"
+              onclick="window.location.href='/listaAlumno/'"
+            >
+              REGISTROS DE ALUMNOS
+            </button>
+          </div>
+        </div>
+
+        <hr class="featurette-divider" />
+
+        <hr class="featurette-divider" />
+      </div>
+
+      <!-- /.container -->
+
+      <!-- FOOTER -->
+    </main>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+
+{% endblock %}

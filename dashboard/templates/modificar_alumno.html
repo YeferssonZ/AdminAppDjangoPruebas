@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<style>
+  /* Estilos personalizados */
+  .container-fluid {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+
+  form {
+    margin-bottom: 0;
+  }
+
+  button {
+    margin-right: 10px;
+  }
+
+  .btn-volver {
+ 
+    text-decoration: none;
+    color: #333;
+  }
+</style>
+
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Modificar Alumno</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a href="{% url 'listalumno' %}" class="btn btn-secondary btn-volver">Volver</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

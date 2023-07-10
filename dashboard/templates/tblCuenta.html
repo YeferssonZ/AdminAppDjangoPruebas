@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Cuentas</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Listado Cuentas</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div class="input-group mb-3">
+          <input type="text" id="searchInput" class="form-control" placeholder="Buscar cuenta">
+        </div>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Usuario</th>
+              <th>Password</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- LISTADO DE CUENTAS -->
+            {% for cuenta in cuentas %}
+            <tr>
+              <td>{{ cuenta.id }}</td>
+              <td>{{ cuenta.username }}</td>
+              <td>{{ cuenta.password }}</td>
+              <td>{{ cuenta.rol }}</td>
+              <td>
+                <form action="{% url 'eliminar_cuenta' cuenta.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                  <a href="{% url 'modificar_cuenta' cuenta.id %}" class="btn btn-primary">Modificar</a>
+                </form>
+                
+              </td>              
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'nueva_cuenta' %}'">Nueva Cuenta</button>
+      <a href="/" class="btn btn-primary">Ir a la página principal</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#searchInput').on('keyup', function() {
+      var value = $(this).val().toLowerCase();
+      $('#dataTable tbody tr').filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Laboratorios</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Inscritos en {{ curso.nombre }}</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- LISTADO DE laboratorios -->
+            {% for inscripcion in inscritos %}
+            <tr>
+              <td>{{ inscripcion.alumno.nombre }} </td>
+              <td>{{ inscripcion.alumno.apellido }}</td>
+              <td>{{ inscripcion.alumno.email }}</td>
+              <td>
+                <a href="{% url 'mostrar_notas' inscripcion.curso.id inscripcion.alumno.id %}" class="btn btn-info">Mostrar Notas</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="display: inline-block; margin-right: 10px">
+          <a href="/" class="btn btn-primary">Ir a la página principal</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

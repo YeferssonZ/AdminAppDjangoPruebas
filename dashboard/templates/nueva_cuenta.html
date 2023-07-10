@@ -1,0 +1,30 @@
+{% extends 'layout.html' %} 
+{% block content %}
+
+<div class="container">
+  <h1>Nueva Cuenta</h1>
+
+  <form method="post" id="formulario_nueva_cuenta">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="username">Usuario:</label>
+      <input type="text" class="form-control" id="username" name="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Contraseña:</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <div class="form-group">
+      <label for="rol">Rol:</label>
+      <select class="form-control" id="rol" name="rol">
+        {% for rol in roles %}
+          <option value="{{ rol.id }}">{{ rol.nombre }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a href="{% url 'listcuenta' %}" class="btn btn-secondary">Volver</a>
+  </form>
+</div>
+
+{% endblock %}
